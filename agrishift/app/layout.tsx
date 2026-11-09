@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { InstallPrompt } from "@/components/InstallPrompt";
 import { PwaRegister } from "@/components/PwaRegister";
 import { t } from "@/lib/i18n";
 import "./globals.css";
@@ -43,7 +44,7 @@ export const viewport: Viewport = {
  * Applique la taille du texte (A / A+ / A++) et le thème mémorisés
  * avant le premier affichage, pour éviter un saut visuel.
  */
-const prefsScript = `try{var s=localStorage.getItem("agrishift.textScale");if(s==="lg"||s==="xl")document.documentElement.dataset.textScale=s;var th=localStorage.getItem("agrishift.theme");if(th==="agrishift-dark")document.documentElement.dataset.theme=th;}catch(e){}`;
+const prefsScript = `try{var s=localStorage.getItem("agrishift.textScale");if(s==="lg"||s==="xl")document.documentElement.dataset.textScale=s;var th=localStorage.getItem("agrishift.theme");if(th==="agrishift-dark")document.documentElement.dataset.theme=th;}catch(e){}window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__installEvent=e;});`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-dvh bg-base-100 text-base-content">
         {children}
         <PwaRegister />
+        <InstallPrompt />
       </body>
     </html>
   );

@@ -67,8 +67,8 @@ function Segmented<T extends string>({
   );
 }
 
-/** Paramètres (§9.11). */
-export default function SettingsPage() {
+/** Contenu de la fenêtre Paramètres. */
+export function SettingsPanel() {
   const router = useRouter();
   const textScale = useTextScale();
   const theme = useTheme();
@@ -94,8 +94,6 @@ export default function SettingsPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-3xl font-bold">{S.title}</h1>
-
       <Section title={S.textSize}>
         <Segmented<TextScale>
           label={S.textSize}
@@ -116,8 +114,8 @@ export default function SettingsPage() {
           value={voiceOn ? "on" : "off"}
           onChange={(v) => setVoiceOn(v === "on")}
           options={[
-            { value: "on", label: <><Volume2 aria-hidden="true" size={22} /> {S.on}</> },
-            { value: "off", label: <><VolumeX aria-hidden="true" size={22} /> {S.off}</> },
+            { value: "on", label: <><Volume2 aria-hidden="true" size={22} className="shrink-0" /> {S.on}</> },
+            { value: "off", label: <><VolumeX aria-hidden="true" size={22} className="shrink-0" /> {S.off}</> },
           ]}
         />
         <p className="text-base opacity-80">{S.voiceHint}</p>

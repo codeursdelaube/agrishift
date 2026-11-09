@@ -16,6 +16,7 @@ export const fr = {
     skip: "Passer",
     save: "Enregistrer",
     cancel: "Annuler",
+    close: "Fermer",
     retry: "Réessayer",
     listen: "Écouter",
     stop: "Arrêter",
@@ -77,12 +78,16 @@ export const fr = {
   },
   landing: {
     heroAlt:
-      "Un champ vert au pied des collines d'Agou, au Togo, sous un ciel nuageux.",
+      "Un agriculteur coiffé d'un chapeau de paille, dans un champ de riz verdoyant.",
     title: "Choisissez vos cultures avec le climat de demain",
     subtitle: "Conseils simples, données NASA, même sans internet.",
     start: "Commencer",
     continue: "Ouvrir mon champ",
     install: "Installer l'application",
+    installTitle: "Installer Agri Shift ?",
+    installText: "Elle s'ouvre d'un toucher depuis votre écran d'accueil et marche sans internet.",
+    installLater: "Plus tard",
+    installUnderstood: "J'ai compris",
     installIosHelp:
       "Sur iPhone : touchez « Partager », puis « Sur l'écran d'accueil ».",
     installDone: "Application installée",

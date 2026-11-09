@@ -4,7 +4,7 @@ Toutes les photos viennent de Wikimedia Commons. Elles ont été redimensionnée
 
 | Fichier | Auteur | Licence | Source |
 |---|---|---|---|
-| /images/landing/hero.webp | Theophile-kk | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Champs_de_ma%C3%AFs_%C3%A0_Agou_Carrefour_08.jpg |
+| /images/landing/hero.webp | Balaram Mahalder | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Farmer_of_Bangladesh.jpg |
 | /images/landing/community.webp | Peter Andresile | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:A_group_of_women_harvesting_groundnuts.jpg |
 | /images/landing/sky.webp | Hermannkass | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Vue_de_la_nature_de_Kara_2.jpg |
 | /images/crops/maize.webp | Adewi97 | CC0 | https://commons.wikimedia.org/wiki/File:Culttue_de_ma%C3%AFs_01.jpg |

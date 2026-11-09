@@ -34,14 +34,14 @@ export default function LandingPage() {
       <main>
         {/* 1. Hero */}
         <section className="relative isolate flex min-h-[88dvh] items-end overflow-hidden">
-          <Photo image="hero" sizes="100vw" priority decorative className="absolute inset-0 -z-20 h-full w-full" />
+          <Photo image="hero" sizes="100vw" priority decorative className="absolute inset-0 -z-20 h-full w-full object-[30%_center]" />
           <span className="sr-only">{L.heroAlt}</span>
           <div
             aria-hidden="true"
             className="absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/45 to-black/10"
           />
           <div className="page-in mx-auto w-full max-w-5xl px-4 pb-10 pt-24 text-white">
-            <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-base font-bold">
+            <p className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full bg-black/50 px-3 py-1 text-base font-bold">
               <SunIcon size={22} />
               {t.app.name}
             </p>

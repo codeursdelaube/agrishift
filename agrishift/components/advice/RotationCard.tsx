@@ -55,9 +55,9 @@ export function RotationCard({
 
       <ol className="flex flex-col gap-3">
         {rec.seasons.map((s, i) => (
-          <li key={s.season_index} className="flex flex-wrap items-center gap-3">
-            <CropPhoto cropId={s.crop_id} size={56} className="shrink-0" />
-            <span className="min-w-28 flex-1">
+          <li key={s.season_index} className="flex items-center gap-3">
+            <CropPhoto cropId={s.crop_id} size={52} className="shrink-0" />
+            <span className="min-w-0 flex-1">
               <span className="block text-lg leading-tight font-bold">{s.crop_name_fr}</span>
               <span className="block text-sm leading-tight opacity-80">
                 {A.season(i + 1)} · {s.season_label_fr}

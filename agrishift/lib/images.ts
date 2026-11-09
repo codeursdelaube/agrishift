@@ -4,13 +4,13 @@ export const IMAGES = {
     "key": "hero",
     "src": "/images/landing/hero.webp",
     "width": 1200,
-    "height": 673,
-    "alt": "Champ et collines à Agou, au Togo",
-    "title": "Champs de maïs à Agou Carrefour 08.jpg",
-    "author": "Theophile-kk",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Champs_de_ma%C3%AFs_%C3%A0_Agou_Carrefour_08.jpg"
+    "height": 798,
+    "alt": "Agriculteur coiffé d'un chapeau de paille, dans un champ de riz",
+    "title": "Farmer of Bangladesh.jpg",
+    "author": "Balaram Mahalder",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Farmer_of_Bangladesh.jpg"
   },
   "community": {
     "key": "community",

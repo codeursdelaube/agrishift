@@ -35,6 +35,9 @@ export function InstallButton() {
       setInstalled(true);
       setPromptEvent(null);
     };
+    // L'événement a pu arriver avant le chargement de ce composant (script de app/layout.tsx).
+    const early = (window as Window & { __installEvent?: Event }).__installEvent;
+    if (early) queueMicrotask(() => setPromptEvent(early as BeforeInstallPromptEvent));
     window.addEventListener("beforeinstallprompt", onPrompt);
     window.addEventListener("appinstalled", onInstalled);
     return () => {
@@ -56,8 +59,12 @@ export function InstallButton() {
         className="sm:w-auto bg-base-100/90"
         icon={<Download size={24} strokeWidth={2.5} />}
         onClick={async () => {
-          await promptEvent.prompt();
-          await promptEvent.userChoice;
+          try {
+            await promptEvent.prompt();
+            await promptEvent.userChoice;
+          } catch {
+            // Déjà utilisé depuis la fenêtre d'installation : le navigateur refuse un second appel.
+          }
           setPromptEvent(null);
         }}
       >

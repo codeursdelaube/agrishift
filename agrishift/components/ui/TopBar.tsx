@@ -1,7 +1,8 @@
 "use client";
 
-import { CircleCheck, CloudUpload, RefreshCw, Settings, WifiOff } from "lucide-react";
-import Link from "next/link";
+import { CircleCheck, CloudUpload, RefreshCw, Settings, WifiOff, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { SettingsPanel } from "@/components/settings/SettingsPanel";
 import { usePendingCount, useOnline, useProfile } from "@/lib/hooks";
 import { t } from "@/lib/i18n";
 import { useSyncStatus } from "@/lib/sync";
@@ -53,6 +54,55 @@ function SyncIndicator() {
   );
 }
 
+/** Fenêtre Paramètres, ouverte depuis la roue crantée. */
+function SettingsButton() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const dialog = ref.current;
+    if (!dialog) return;
+    if (open && !dialog.open) dialog.showModal();
+    if (!open && dialog.open) dialog.close();
+  }, [open]);
+
+  return (
+    <>
+      <button
+        type="button"
+        aria-label={t.nav.settings}
+        aria-haspopup="dialog"
+        onClick={() => setOpen(true)}
+        className="btn btn-ghost btn-circle h-12 w-12"
+      >
+        <Settings aria-hidden="true" size={26} />
+      </button>
+      <dialog
+        ref={ref}
+        aria-labelledby="settings-title"
+        className="modal modal-bottom sm:modal-middle"
+        onClose={() => setOpen(false)}
+      >
+        <div className="modal-box flex max-h-[92dvh] flex-col gap-4 p-0">
+          <div className="sticky top-0 z-10 flex items-center justify-between gap-2 border-b border-base-300 bg-base-100 px-4 py-2">
+            <h2 id="settings-title" className="text-2xl font-bold">
+              {t.settings.title}
+            </h2>
+            <button type="button" onClick={() => setOpen(false)} className="btn btn-ghost min-h-12 h-auto gap-2 rounded-full px-3">
+              <X aria-hidden="true" size={24} />
+              {t.common.close}
+            </button>
+          </div>
+          <div className="px-4 pb-6">{open ? <SettingsPanel /> : null}</div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button aria-label={t.common.close}>{t.common.close}</button>
+        </form>
+      </dialog>
+    </>
+  );
+}
+
 /** Barre du haut : nom de la zone, synchro, Paramètres. */
 export function TopBar() {
   const profile = useProfile();
@@ -65,13 +115,7 @@ export function TopBar() {
           {zone ? zone.name_fr : t.app.shortName}
         </p>
         <SyncIndicator />
-        <Link
-          href="/parametres"
-          aria-label={t.nav.settings}
-          className="btn btn-ghost btn-circle h-12 w-12"
-        >
-          <Settings aria-hidden="true" size={26} />
-        </Link>
+        <SettingsButton />
       </div>
     </header>
   );

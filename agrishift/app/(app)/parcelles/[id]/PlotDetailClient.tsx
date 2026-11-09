@@ -136,21 +136,19 @@ export default function PlotDetailPage() {
             {(t.sync.rejected as Record<string, string>)[plot.sync_error ?? ""] ?? ""}
           </p>
         ) : null}
-        <dl className="mt-3 grid gap-2 text-lg">
-          <div>
-            <dt className="inline opacity-80">{P.summary.size} : </dt>
-            <dd className="inline font-bold">{sizeLabel(plot.area_ha)}</dd>
-          </div>
-          <div>
-            <dt className="inline opacity-80">{P.summary.soil} : </dt>
-            <dd className="inline font-bold">
-              {plot.soil_assumed ? P.soilAssumed : soilLabel(plot.soil_id)}
-            </dd>
-          </div>
-          <div>
-            <dt className="inline opacity-80">{P.summary.lastCrop} : </dt>
-            <dd className="inline font-bold">{cropLabel(plot.previous_crop_id)}</dd>
-          </div>
+        <dl className="mt-3 divide-y divide-base-300 rounded-box border border-base-300">
+          {(
+            [
+              [P.summary.size, sizeLabel(plot.area_ha)],
+              [P.summary.soil, plot.soil_assumed ? P.soilAssumed : soilLabel(plot.soil_id)],
+              [P.summary.lastCrop, cropLabel(plot.previous_crop_id)],
+            ] as const
+          ).map(([label, value]) => (
+            <div key={label} className="flex flex-wrap items-baseline justify-between gap-x-3 px-4 py-3">
+              <dt className="opacity-80">{label}</dt>
+              <dd className="text-lg font-bold">{value}</dd>
+            </div>
+          ))}
         </dl>
       </div>
 

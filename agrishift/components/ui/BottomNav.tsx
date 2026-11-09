@@ -33,7 +33,7 @@ export function BottomNavView({ pathname }: { pathname: string }) {
               <Link
                 href={href}
                 aria-current={active ? "page" : undefined}
-                className={`flex min-h-16 flex-col items-center justify-center gap-0.5 px-1 text-center text-xs leading-tight font-bold ${
+                className={`flex min-h-[4.25rem] flex-col items-center justify-start gap-0.5 px-1 pt-1.5 pb-1 text-center text-xs leading-tight font-bold ${
                   active ? "text-primary" : "text-base-content/75"
                 }`}
               >

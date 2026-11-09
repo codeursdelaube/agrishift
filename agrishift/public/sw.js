@@ -10,7 +10,6 @@ const PAGES = [
   "/meteo",
   "/region",
   "/echanges",
-  "/parametres",
   "/demarrer",
   "/parcelles/nouvelle",
   "/a-propos",
@@ -34,6 +33,13 @@ const ASSETS = [
 ];
 
 const NEXT_ASSET = /\/_next\/static\/[^"'\\\s)]+/g;
+// Les pages à identifiant (Partial Prerender) rechargent leur contenu au démarrage.
+const RESUME_CALL = /__NEXT_CLIENT_RESUME=fetch\(location\.pathname\+'(\?_rsc=[^']+)'/;
+const RESUME_HEADERS = {
+  rsc: "1",
+  "next-router-prefetch": "1",
+  "next-router-segment-prefetch": "/_full",
+};
 
 /** Garde une page et tous les fichiers JS/CSS qu'elle référence : sans eux, pas d'hydratation. */
 async function cachePage(url) {
@@ -41,7 +47,14 @@ async function cachePage(url) {
   const response = await fetch(url);
   if (!response.ok) return;
   await pages.put(url, response.clone());
-  const assets = new Set((await response.text()).match(NEXT_ASSET) ?? []);
+  const html = await response.text();
+  const resume = RESUME_CALL.exec(html);
+  if (resume) {
+    const resumeUrl = url + resume[1];
+    const data = await fetch(resumeUrl, { headers: RESUME_HEADERS });
+    if (data.ok) await pages.put(resumeUrl, data);
+  }
+  const assets = new Set(html.match(NEXT_ASSET) ?? []);
   await Promise.allSettled(
     [...assets].map(async (asset) => {
       if (!(await statics.match(asset))) await statics.add(asset);
@@ -85,7 +98,29 @@ async function fromNetworkFirst(request) {
     return response;
   } catch {
     const cached = await cache.match(request, { ignoreSearch: true });
-    return cached ?? Response.redirect("/accueil", 302);
+    if (!cached) return Response.redirect("/accueil", 302);
+    // Une page sans son contenu resterait sur le squelette : mieux vaut revenir à l'accueil.
+    const resume = RESUME_CALL.exec(await cached.clone().text());
+    if (resume && !(await cache.match(new URL(request.url).pathname + resume[1], { ignoreVary: true }))) {
+      return Response.redirect("/accueil", 302);
+    }
+    return cached;
+  }
+}
+
+/** Contenu de page : le réseau d'abord, la copie gardée seulement sans réseau. */
+async function fromNetworkOrResumeCache(request) {
+  const cache = await caches.open(PAGE_CACHE);
+  try {
+    const response = await fetch(request);
+    if (response.ok && request.headers.get("next-router-segment-prefetch") === "/_full") {
+      void cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    const cached = await cache.match(request, { ignoreVary: true });
+    if (cached) return cached;
+    throw error;
   }
 }
 
@@ -105,6 +140,8 @@ self.addEventListener("fetch", (event) => {
 
   if (request.mode === "navigate") {
     event.respondWith(fromNetworkFirst(request));
+  } else if (url.searchParams.has("_rsc")) {
+    event.respondWith(fromNetworkOrResumeCache(request));
   } else if (
     url.pathname.startsWith("/_next/static/") ||
     url.pathname.startsWith("/images/") ||

@@ -119,7 +119,7 @@ export function OnboardingWizard({ initial }: { initial: ProfileRow | null }) {
               onSelect={() => setZoneId(z.zone_id)}
               icon={<TogoMap highlight={z.map} title={z.name_fr} className="h-20 w-auto text-base-content" />}
               label={z.name_fr}
-              description={z.town_fr}
+              description={z.town_fr === z.name_fr ? undefined : z.town_fr}
             />
           ))}
         </div>

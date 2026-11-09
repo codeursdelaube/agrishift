@@ -89,7 +89,7 @@ export default function AdvicePage() {
 
       <section aria-labelledby="whatif" className="flex flex-col gap-3">
         <h2 id="whatif" className="text-xl font-bold">{A.whatIf}</h2>
-        <div role="radiogroup" aria-labelledby="whatif" className="flex flex-col gap-2">
+        <div role="radiogroup" aria-labelledby="whatif" className="grid grid-cols-2 gap-2">
           {options.map((o) => (
             <button
               key={o.id}
@@ -97,7 +97,7 @@ export default function AdvicePage() {
               role="radio"
               aria-checked={scenario === o.id}
               onClick={() => setScenario(o.id)}
-              className={`press flex min-h-14 items-center gap-3 rounded-box border-2 px-4 text-left font-bold ${
+              className={`press flex min-h-20 flex-col items-center justify-center gap-1 rounded-box border-2 p-2 text-center leading-tight font-bold odd:last:col-span-2 ${
                 scenario === o.id ? "border-primary bg-primary/10" : "border-base-300 bg-base-100"
               }`}
             >

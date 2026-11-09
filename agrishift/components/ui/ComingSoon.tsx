@@ -25,7 +25,7 @@ export function ComingSoon({
 /** Squelette de chargement (pas de spinner seul). */
 export function Skeleton({ lines = 3 }: { lines?: number }) {
   return (
-    <div className="flex flex-col gap-3" aria-hidden="true">
+    <div className="skeleton-late flex flex-col gap-3" aria-hidden="true">
       {Array.from({ length: lines }, (_, i) => (
         <div key={i} className="skeleton h-20 w-full" />
       ))}
